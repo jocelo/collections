@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 const Input = ({label, text, type, id, value, handleChange}) => (
 	<div className="form-group">
@@ -11,6 +12,8 @@ const Input = ({label, text, type, id, value, handleChange}) => (
 			onChange={handleChange}
 			required
 		/>
+		<FontAwesomeIcon icon="coffee" />
+		<FontAwesomeIcon icon="adversal" />
 	</div>
 )
 
