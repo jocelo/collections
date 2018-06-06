@@ -3,14 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/react-fontawesome": "0.0.20",
     "ajv": "^6.5.0",
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "react": "^16.4.0",
+    "react-autocomplete": "^1.8.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "styled-components": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

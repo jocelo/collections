@@ -1,0 +1,24 @@
+{
+	"categories":[{
+		"id": 100,
+		"label": "Barbie"
+	},{
+		"id": 101,
+		"label": "Funko"
+	},{
+		"id": 102,
+		"label": "Ken"
+	},{
+		"id": 103,
+		"label": "DC Comics"
+	},{
+		"id": 104,
+		"label": "Marvel Comics"
+	},{
+		"id": 105,
+		"label": "Snes Games"
+	},{
+		"id": 106,
+		"label": "Nes Games"
+	}
+]}
