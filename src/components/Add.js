@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import ReactAutocomplete from 'react-autocomplete';
-import preload from '../assets/data.json';
+import styled from 'styled-components';
 import FaIcon from '@fortawesome/react-fontawesome';
+import preload from '../assets/data.json';
 
 import { Grid, FormGroup, ControlLabel, FormControl, Col, Form, Checkbox, Button, Row, Panel, PanelHeading, PanelBody, Label, Badge} from 'react-bootstrap';
+
+const H3 = styled.h3`
+	display: inline;
+`;
 
 class Add extends Component {
 	constructor(props) {
@@ -34,19 +39,19 @@ class Add extends Component {
   <FormGroup controlId="formHorizontalEmail">
   	<Row>
 	    <Col componentClass={ControlLabel} sm={2}> Name: </Col>
-	    <Col sm={8}> <FormControl type="text" placeholder="Name of the collectible" /> </Col>
+	    <Col sm={9}> <FormControl type="text" placeholder="Name of the collectible" /> </Col>
     </Row>
   </FormGroup>
   <FormGroup controlId="formHorizontalEmail">
   	<Row>
-	    <Col componentClass={ControlLabel} sm={2}> : </Col>
-	    <Col sm={8}> <FormControl type="text" placeholder="Name of the collectible" /> </Col>
+	    <Col componentClass={ControlLabel} sm={2}> Release Date: </Col>
+	    <Col sm={9}> <FormControl type="text" placeholder="Name of the collectible" /> </Col>
     </Row>
   </FormGroup>
   <FormGroup controlId="formHorizontalEmail">
   	<Row>
 	    <Col componentClass={ControlLabel} sm={2}> Category: </Col>
-	    <Col sm={8}>
+	    <Col sm={9}>
 	      <ReactAutocomplete
 	        items={preload.categories}
 	        shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
@@ -64,43 +69,20 @@ class Add extends Component {
 	        onSelect={value => this.setState({ value })}
 	      />
 	    </Col>
-    </Row>
-    <Row>
-    <Col>  
-    	<h1>
-  			<Label className="mr-2">42<FaIcon icon="times" size='lg' className="label-icon" /> </Label>
-  		</h1>
-  		<Badge>42</Badge>
-  		<Badge>42</Badge>
-  	 </Col>
-    </Row>
-  </FormGroup>
-  <FormGroup controlId="formHorizontalEmail">
-  	<Row>
-	    <Col componentClass={ControlLabel} sm={2}> Name: </Col>
-	    <Col sm={8}> <FormControl type="text" placeholder="Name of the collectible" /> </Col>
+    <Col smOffset={2}  md={8}>
+    	<H3>
+  			<Label className="mr-2">Barbie<FaIcon icon="times" size='lg' className="label-icon" /> </Label>
+  		</H3>
+  		<H3>
+  			<Label className="mr-2">Nes Games<FaIcon icon="times" size='lg' className="label-icon" /> </Label>
+  		</H3>
+  		<H3>
+  			<Label className="mr-2">Funkos<FaIcon icon="times" size='lg' className="label-icon" /> </Label>
+  		</H3>
+  	</Col>
     </Row>
   </FormGroup>
 
-
-  <FormGroup bsSize='lg' controlId="formHorizontalPassword">
-  <Row>
-    <Col componentClass={ControlLabel} sm={2}>
-      Password
-    </Col>
-    <Col sm={10}>
-
-    </Col>
-    </Row>
-  </FormGroup>
-
-  <FormGroup bsSize='lg'>
-  <Row>
-    <Col smOffset={2} sm={10}>
-      <Checkbox>Remember me</Checkbox>
-    </Col>
-    </Row>
-  </FormGroup>
 
   <FormGroup bsSize='lg'>
   <Row>

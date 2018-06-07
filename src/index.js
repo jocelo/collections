@@ -12,7 +12,7 @@ import AddToCollection from './components/Add';
 import Profile from './components/Profile';
 
 const FourOhFour = () => (
-	<div> CACA </div>
+	<div> CACA 404 CACA </div>
 )
 
 const detailsDiv = () => (
