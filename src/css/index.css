@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: Palatino;
 }
+
+.label {
+	border-radius: 1em;
+}

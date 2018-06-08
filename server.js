@@ -22,6 +22,8 @@ mongoose.connect(dbConfig.url)
 	process.exit();
 });
 
+require('./server/routes/note.routes')(app);
+
 app.get('/', (req, res)=> {
 	res.json({status:'ok', message:'Welcome to collections API v0.06.18'});
 });
