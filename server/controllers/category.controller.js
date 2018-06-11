@@ -1,9 +1,13 @@
 const Category = require('../models/category.model');
 
 exports.create = (req, res) => {
-	if (!req.body.content) {
+	console.log('params', req.params);
+	console.log('body', req.body, req.body.length);
+	console.log('query', req.query);
+	// console.log('params', req.param('title'));
+	if (!req.body) {
 		return res.status(400).send({
-			message: "Note content cannot be empty"
+			message: "Category details cannot be empty"
 		});
 	}
 
@@ -57,6 +61,56 @@ exports.findOne = (req, res) => {
 		});
 }
 
-exports.update = (req, res) => {}
+exports.update = (req, res) => {
+	if(!req.body.content) {
+		return res.status(400).send({
+			message: "Category content cannot be empty."
+		});
+	}
 
-exports.delete = (req, res) => {}
+	Category.findByIdAndUpdate(req.params.catID, {
+		title: req.params.title
+	}, {new: true})
+	.then(cat=>{
+		if (!cat) {
+			return res.status(404).send({
+				message: `Category not found with id ${catID}`
+			});
+		}
+		res.send(cat);
+	})
+	.catch(err=>{
+		if (err.kind === 'ObjectId') {
+			return res.status(404).send({
+				message: `Category not found with id: ${req.params.catID}`
+			});
+		}
+		return res.status(500).send({
+			message: `There was an error while attempting to update the Category with id: ${req.params.catID}`
+		});
+	});
+}
+
+exports.delete = (req, res) => {
+	Category.findByIdAndRemove(req.params.catID)
+		.then(cat=>{
+			if (!cat) {
+				return res.status(404).send({
+					message: `Category not found with id ${catID}`
+				});
+			}
+			res.send({
+				message: 'Note delete successfully!'
+			});
+		})
+		.catch(err=>{
+			if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+				return res.status(404).send({
+					message: `Category not found with id: ${req.params.catID}`
+				});
+			}
+			return res.status(500).send({
+				message: `There was an error while attempting to delete the Category with id: ${req.params.catID}`
+			});
+		});
+}

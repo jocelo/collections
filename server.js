@@ -6,8 +6,15 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = 8088;
 
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  next();
+});
 
 mongoose.Promise = global.Promise;
 
@@ -22,9 +29,10 @@ mongoose.connect(dbConfig.url)
 	process.exit();
 });
 
-require('./server/routes/note.routes')(app);
+require('./server/routes/category.routes')(app);
+require('./server/routes/collection.routes')(app);
 
-app.get('/', (req, res)=> {
+app.get('/api', (req, res)=> {
 	res.json({status:'ok', message:'Welcome to collections API v0.06.18'});
 });
 
