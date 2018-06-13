@@ -53,3 +53,7 @@ div.header a:hover {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.favorited {
+  color: DarkGoldenRod;
+}

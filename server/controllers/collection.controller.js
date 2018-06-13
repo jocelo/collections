@@ -30,7 +30,7 @@ exports.findAll = (req, res) => {
 		.then(data=>{
 			let result = data.map(col=>{
 				return {
-					id: col.id,
+					id: col._id,
 					name: col.name,
 					favorite: col.favorite
 				}

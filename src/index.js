@@ -12,7 +12,7 @@ import AddToCollection from './components/Add';
 import Profile from './components/Profile';
 
 const FourOhFour = () => (
-	<div> CACA 404 CACA </div>
+	<div> doodoo &lt;!-- 404 --&gt; doodoo </div>
 )
 
 const detailsDiv = () => (
@@ -25,6 +25,7 @@ const Router = () => (
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route exact path="/add" component={AddToCollection} />
+				<Route exact path="/edit/:id" component={AddToCollection} />
 				<Route exact path="/profile" component={Profile} />
 				<Route exact path="/details" component={detailsDiv} />
 

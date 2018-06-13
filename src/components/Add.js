@@ -20,10 +20,13 @@ class Add extends Component {
     
     this.addNewCategory = this.addNewCategory.bind(this);
     this.saveField = this.saveField.bind(this);
+    this.saveFieldArea = this.saveFieldArea.bind(this);
     this.saveCollection = this.saveCollection.bind(this);
     
     this.state = {
+      panelHeader: 'id' in props.match.params ? 'EDIT' : 'Adding new item to collection',
       col_name: '',
+      col_desc: '',
       col_release_date: new Date(),
       col_favorite: false,
       searchedValue: '',
@@ -35,10 +38,8 @@ class Add extends Component {
   componentDidMount() {
     fetch(`${backend.getAllCats}`)
     .then(res=>{
-      console.log('data from the backend');
       console.log(res);
     })
-    .then*(second=>{ console.log('second', second) })
     .catch(err=>{
       console.log('THERE is an error', err);
     });
@@ -46,6 +47,10 @@ class Add extends Component {
 
   saveField(evt) {
     this.setState({col_name: evt.target.value});
+  }
+
+  saveFieldArea(evt) {
+    this.setState({col_desc: evt.target.value});
   }
 
   saveCollection(evt) {
@@ -96,7 +101,7 @@ class Add extends Component {
       <Grid className="mt-5">
   <Panel bsStyle="info">
     <Panel.Heading>
-      <Panel.Title componentClass="h3">Adding new item to collection</Panel.Title>
+      <Panel.Title componentClass="h3">{this.state.panelHeader}</Panel.Title>
     </Panel.Heading>
     <Panel.Body>
       
@@ -106,6 +111,12 @@ class Add extends Component {
     <Row>
       <Col componentClass={ControlLabel} sm={2}> Name: </Col>
       <Col sm={9}> <FormControl type="text" name="col_name"  placeholder="Name of the collectible" onChange={this.saveField} value={this.state.col_name} /> </Col>
+    </Row>
+  </FormGroup>
+  <FormGroup controlId="formHorizontalEmail">
+    <Row>
+      <Col componentClass={ControlLabel} sm={2}> Description: </Col>
+      <Col sm={9}> <FormControl componentClass="textarea" name="col_desc" placeholder="Description" onChange={this.saveFieldArea} value={this.state.col_desc} /> </Col>
     </Row>
   </FormGroup>
   <FormGroup controlId="formHorizontalEmail">
