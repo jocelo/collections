@@ -38,6 +38,7 @@ class Add extends Component {
       console.log('data from the backend');
       console.log(res);
     })
+    .then*(second=>{ console.log('second', second) })
     .catch(err=>{
       console.log('THERE is an error', err);
     });

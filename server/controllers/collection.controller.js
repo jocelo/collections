@@ -27,8 +27,15 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
 	Collection.find()
-		.then(colls=>{
-			res.send(colls)
+		.then(data=>{
+			let result = data.map(col=>{
+				return {
+					id: col.id,
+					name: col.name,
+					favorite: col.favorite
+				}
+			});
+			res.json(result);
 		})
 		.catch(err=>{
 			res.status(500).send({

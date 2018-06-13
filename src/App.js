@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './assets/logo.svg';
 import Header from './components/Header';
+import Collections from './components/Collections';
 import './css/App.css';
 
 import fontawesome      from '@fortawesome/fontawesome'
@@ -25,6 +26,7 @@ class App extends Component {
     return (
     	<div>
     		<Header />
+    		<Collections />
 	      <Grid />
     	</div>
     );
