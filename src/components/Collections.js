@@ -31,33 +31,31 @@ class Collections extends Component {
 
   render() {
     return (
-      <div>
       <Row>
-      <Col md={10} smOffset={1}>
-      <Panel bsStyle="primary">
-        <Panel.Heading>
-          <Panel.Title componentClass="h3">Panel heading</Panel.Title>
-        </Panel.Heading>
-        <Panel.Body>
-        {this.state.collections.map(collection => (
-          <Col sm={2} key={collection.id}>
-            <Panel bsStyle="info">
-              <Panel.Heading>
-                <Panel.Title componentClass="h3">{collection.name}</Panel.Title>
-              </Panel.Heading>
-              <Panel.Body>Panel content</Panel.Body>
-              <Panel.Footer className="col d-flex justify-content-end">
-                <Link to={`/edit/${collection.id}`}> <FaIcon icon="edit" size='2x' className="mr-2" /> </Link>
-                <FaIcon icon="star" size='2x' className={collection.favorited} onClick={this.markFavorite} />
-              </Panel.Footer>
-            </Panel>
-          </Col>
-        ))}
-        </Panel.Body>
-      </Panel>
-      </Col>
-    </Row>
-      </div>
+        <Col md={10} smOffset={1} className="mt-3">
+          <Panel bsStyle="primary">
+            <Panel.Heading>
+              <Panel.Title componentClass="h3">Panel heading</Panel.Title>
+            </Panel.Heading>
+            <Panel.Body className="row">
+              {this.state.collections.map(collection => (
+                <Col sm={3} key={collection.id} className="mt-3">
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">{collection.name}</h5>
+                      <p className="card-text">{collection.desc}</p>
+                    </div>
+                    <div className="card-footer d-flex justify-content-end">
+                      <Link to={`/edit/${collection.id}`}> <FaIcon icon="edit" size='2x' className="mr-2" /> </Link>
+                      <FaIcon icon="star" size='2x' className={collection.favorited} onClick={this.markFavorite} />
+                    </div>
+                  </div>
+                </Col>
+              ))}
+            </Panel.Body>
+          </Panel>
+        </Col>
+      </Row>
     )
   }
 }

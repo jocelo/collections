@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import Header from './Header';
+import AlertMsg from './AlertMsg';
 import ReactAutocomplete from 'react-autocomplete';
 import styled from 'styled-components';
 import FaIcon from '@fortawesome/react-fontawesome';
@@ -8,7 +9,7 @@ import preload from '../assets/data.json';
 import backend from './backend.js';
 import DatePicker from 'react-date-picker';
 
-import { Grid, FormGroup, ControlLabel, FormControl, Col, Form, Button, Row, Panel, Label} from 'react-bootstrap';
+import { Grid, FormGroup, ControlLabel, FormControl, Col, Form, Button, Row, Panel, Label, Alert} from 'react-bootstrap';
 
 const H4 = styled.h4`
   display: inline;
@@ -22,16 +23,20 @@ class Add extends Component {
     this.saveField = this.saveField.bind(this);
     this.saveFieldArea = this.saveFieldArea.bind(this);
     this.saveCollection = this.saveCollection.bind(this);
+    this.closeAlertMsg = this.closeAlertMsg.bind(this);
     
     this.state = {
-      panelHeader: 'id' in props.match.params ? 'EDIT' : 'Adding new item to collection',
+      panelHeader: 'id' in props.match.params ? 'Edit ' : 'Adding new item to collection',
       col_name: '',
       col_desc: '',
       col_release_date: new Date(),
       col_favorite: false,
       searchedValue: '',
       pills: preload.categories,
-      selected_category: ''
+      selected_category: '',
+      submitError: false,
+      submitSuccess: false,
+      alertClass: 'error'
     }
   }
 
@@ -43,6 +48,19 @@ class Add extends Component {
     .catch(err=>{
       console.log('THERE is an error', err);
     });
+
+    if ('id' in this.props.match.params) {
+      fetch(`${backend.getCollection}/${this.props.match.params.id}`)
+      .then(response=>{
+        response.json().then(data=>{
+          console.log('details from the object');
+          console.log(data);
+        });
+      })
+      .catch(err=>{
+        console.log('ERROR');
+      });
+    }
   }
 
   saveField(evt) {
@@ -53,8 +71,18 @@ class Add extends Component {
     this.setState({col_desc: evt.target.value});
   }
 
+  closeAlertMsg() {
+    this.setState({submitError: false});
+  }
+
   saveCollection(evt) {
     evt.preventDefault();
+    console.log('saving these:', this.state);
+    return;
+    if (this.state.col_name.trim() === '') {
+      this.setState({submitError: true, alertClass: 'error'});  
+    }
+    //this.setState({alertClass: 'error', showIt: true});
     fetch(`${backend.addCollection}`, {
       method: 'POST',
       headers: {
@@ -68,6 +96,13 @@ class Add extends Component {
     })
     .then(res=>{
       console.log('Collection saved!!', res);
+      this.setState({
+        col_name: '',
+        col_desc: '',
+        submitSuccess: true,
+        submitError: true,
+        alertClass: 'success'
+      });
     })
     .catch(err=>{
       console.log('THERE is an error', err);
@@ -104,7 +139,7 @@ class Add extends Component {
       <Panel.Title componentClass="h3">{this.state.panelHeader}</Panel.Title>
     </Panel.Heading>
     <Panel.Body>
-      
+    <AlertMsg showIt={this.state.submitError} useClass={this.state.alertClass} closeAlert={this.closeAlertMsg} />
 <Form horizontal onSubmit={this.saveCollection}>
 
   <FormGroup controlId="formHorizontalEmail">
@@ -177,7 +212,7 @@ class Add extends Component {
   <FormGroup bsSize='lg'>
   <Row>
     <Col smOffset={2} sm={10}>
-      <Button type="submit" bsStyle="info" >Save</Button>
+      <Button type="submit" bsStyle="info">Save</Button>
     </Col>
     </Row>
   </FormGroup>
