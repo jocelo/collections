@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const CategorySchema = mongoose.Schema({
 	id: Number,
-	title: String
+	title: String,
+	active: {type: Boolean, default: true}
 }, {
 	timestamps: true
 });

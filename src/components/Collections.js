@@ -11,6 +11,7 @@ class Collections extends Component {
     this.state = {
       collections: []
     };
+
     this.markFavorite = this.markFavorite.bind(this);
   }
 
@@ -27,6 +28,27 @@ class Collections extends Component {
   markFavorite(ev) {
     console.log(ev.currentTarget);
     console.log(ev.target);
+  }
+
+  deleteCollection(collId) {
+    fetch(`${backend.deleteCollection}/${collId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response=>{
+      if (response.status === 200) {
+        response.json().then(res=>{
+          this.setState({
+            collections: this.state.collections.filter(coll=>{ console.log(coll); console.log(coll.id,' vs ',collId); return coll.id !== collId })
+          });
+        });
+      }
+    })
+    .catch(err=>{
+      console.log('THERE is an error', err);
+    });
   }
 
   render() {
@@ -46,7 +68,8 @@ class Collections extends Component {
                       <p className="card-text">{collection.desc}</p>
                     </div>
                     <div className="card-footer d-flex justify-content-end">
-                      <Link to={`/edit/${collection.id}`}> <FaIcon icon="edit" size='2x' className="mr-2" /> </Link>
+                      <FaIcon icon="trash-alt" size='2x' className="mr-2" onClick={e=>{ this.deleteCollection(collection.id) } } />
+                      <Link to={`/edit/${collection.id}`} className="mr-2"> <FaIcon icon="edit" size='2x' /> </Link>
                       <FaIcon icon="star" size='2x' className={collection.favorited} onClick={this.markFavorite} />
                     </div>
                   </div>

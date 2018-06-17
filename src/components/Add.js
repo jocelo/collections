@@ -43,7 +43,10 @@ class Add extends Component {
   componentDidMount() {
     fetch(`${backend.getAllCats}`)
     .then(res=>{
-      console.log(res);
+      console.log(res.json().then(items=>{
+      console.log('this are all the catgorie');
+        console.log(items);
+      }));
     })
     .catch(err=>{
       console.log('THERE is an error', err);
@@ -77,8 +80,6 @@ class Add extends Component {
 
   saveCollection(evt) {
     evt.preventDefault();
-    console.log('saving these:', this.state);
-    return;
     if (this.state.col_name.trim() === '') {
       this.setState({submitError: true, alertClass: 'error'});  
     }

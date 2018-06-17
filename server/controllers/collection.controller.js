@@ -9,9 +9,9 @@ exports.create = (req, res) => {
 
   // add an entry to the new Collection
   const collection = new Collection({
-    name: req.body.name || "no_name",
-    desc: req.body.desc || '',
-    release_date: req.body.release_date || Date.now,
+    name: req.body.col_name || "no_name",
+    desc: req.body.col_desc || '',
+    release_date: req.body.col_release_date || Date.now,
     favorite: false
   });
 
@@ -59,6 +59,31 @@ exports.findOne = (req, res) => {
   .catch(err=>{
     res.status(500).send({
       message: err.message || "There was an error while retrieving the Collection."
+    });
+  });
+}
+
+exports.delete = (req, res) => {
+  Collection.findByIdAndRemove(req.params.collId)
+  .then(cat=>{
+    if (!cat) {
+      return res.status(404).send({
+        message: `Collection not found with id ${collId}`
+      });
+    }
+    res.send({
+      status: 200,
+      message: 'Collection deleted successfully!'
+    });
+  })
+  .catch(err=>{
+    if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+      return res.status(404).send({
+        message: `Collection not found with id: ${req.params.collId}`
+      });
+    }
+    return res.status(500).send({
+      message: `There was an error while attempting to delete the Collection with id: ${req.params.collId}`
     });
   });
 }

@@ -18,10 +18,11 @@ import faBell       from '@fortawesome/fontawesome-free-solid/faBell';
 import faTimes      from '@fortawesome/fontawesome-free-solid/faTimes';
 import faStar      	from '@fortawesome/fontawesome-free-solid/faStar';
 import faEdit      	from '@fortawesome/fontawesome-free-solid/faEdit';
+import faTrashAlt   from '@fortawesome/fontawesome-free-solid/faTrashAlt';
 
 import { Grid } from 'react-bootstrap';
 
-fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faAt, faBell, faHome, faTimes, faStar, faEdit);
+fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faAt, faBell, faHome, faTimes, faStar, faEdit, faTrashAlt);
 
 class App extends Component {
   render() {

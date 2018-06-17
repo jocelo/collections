@@ -6,4 +6,6 @@ module.exports = app =>{
 	app.get('/api/collection/:collId', collections.findOne);
 
 	app.post('/api/collection', collections.create);
+
+	app.delete('/api/collection/:collId', collections.delete);
 };
