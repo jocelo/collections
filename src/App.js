@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import logo from './assets/logo.svg';
 import Header from './components/Header';
 import Collections from './components/Collections';
+import backend from './components/backend.js';
 import './css/App.css';
 
 import fontawesome      from '@fortawesome/fontawesome'
@@ -25,11 +25,41 @@ import { Grid } from 'react-bootstrap';
 fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faAt, faBell, faHome, faTimes, faStar, faEdit, faTrashAlt);
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			collections: []
+		};
+
+		this.updateCollections = this.updateCollections.bind(this);
+	}
+
+	updateCollections(newColl) {
+		console.log('updateCollections');
+		console.log(this.state.collections);
+		console.log(newColl);
+		//const allNew = this.state.collections.concatenate(newColl);
+		console.log('all new');
+		this.setState({
+			collections: [...this.state.collections, newColl]
+		});
+	}
+
+	componentDidMount(){
+		fetch(`${backend.getCollections}`)
+    .then((response)=>{
+      response.json().then(data=>{
+        this.setState({collections:data});
+      });
+    })
+    .catch(err=>{throw(err)});
+	}
+
   render() {
     return (
     	<div>
-    		<Header />
-    		<Collections />
+    		<Header collections={this.state.collections} updateCollections={this.updateCollections} />
+    		<Collections collections={this.state.collections} />
 	      <Grid />
     	</div>
     );

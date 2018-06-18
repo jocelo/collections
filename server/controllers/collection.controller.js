@@ -9,11 +9,13 @@ exports.create = (req, res) => {
 
   // add an entry to the new Collection
   const collection = new Collection({
-    name: req.body.col_name || "no_name",
-    desc: req.body.col_desc || '',
-    release_date: req.body.col_release_date || Date.now,
+    name: req.body.name || "no_name",
+    desc: req.body.description || '',
+    release_date: req.body.release_date,
     favorite: false
   });
+
+  console.log('collection taht is goig to be saved:', collection);
 
   collection.save()
     .then(data=>{
