@@ -238,4 +238,32 @@ class AddModal extends Component {
   }
 }
 
+class DeleteCollectionModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <Modal>
+        
+        <Modal.Header>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <h3>Confirm delete</h3>
+          <p>Are you sure you want to delete the selected collection?</p>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button bsStyle="info" className="mr-3" onClick={this.submitAddForm}>Delete</Button>
+          <Button bsStyle="primary" onClick={this.props.hideAddModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    )
+  }
+}
+
 export default Header;

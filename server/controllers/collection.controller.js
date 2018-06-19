@@ -15,11 +15,14 @@ exports.create = (req, res) => {
     favorite: false
   });
 
-  console.log('collection taht is goig to be saved:', collection);
-
   collection.save()
     .then(data=>{
-      res.send(data);
+      res.send({
+        id: data._id,
+        name: data.name,
+        desc: data.desc,
+        favorite: data.favorite
+      });
     })
     .catch(err=>{
       res.status(500).send({

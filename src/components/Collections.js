@@ -9,13 +9,13 @@ class Collections extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collections: []
     };
 
     this.markFavorite = this.markFavorite.bind(this);
   }
 
   componentDidMount() {
+    /*
     fetch(`${backend.getCollections}`)
     .then((response)=>{
       response.json().then(data=>{
@@ -23,6 +23,7 @@ class Collections extends Component {
       });
     })
     .catch(err=>{throw(err)});
+    */
   }
 
   markFavorite(ev) {
@@ -31,6 +32,7 @@ class Collections extends Component {
   }
 
   deleteCollection(collId) {
+    /*
     fetch(`${backend.deleteCollection}/${collId}`, {
       method: 'DELETE',
       headers: {
@@ -49,6 +51,7 @@ class Collections extends Component {
     .catch(err=>{
       console.log('THERE is an error', err);
     });
+    */
   }
 
   render() {
@@ -60,7 +63,7 @@ class Collections extends Component {
               <Panel.Title componentClass="h3">Panel heading</Panel.Title>
             </Panel.Heading>
             <Panel.Body className="row">
-              {this.state.collections.map(collection => (
+              {this.props.collections.map(collection => (
                 <Col sm={3} key={collection.id} className="mt-3">
                   <div className="card">
                     <div className="card-body">
