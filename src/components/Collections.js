@@ -15,43 +15,11 @@ class Collections extends Component {
   }
 
   componentDidMount() {
-    /*
-    fetch(`${backend.getCollections}`)
-    .then((response)=>{
-      response.json().then(data=>{
-        this.setState({collections:data});
-      });
-    })
-    .catch(err=>{throw(err)});
-    */
   }
 
   markFavorite(ev) {
     console.log(ev.currentTarget);
     console.log(ev.target);
-  }
-
-  deleteCollection(collId) {
-    /*
-    fetch(`${backend.deleteCollection}/${collId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response=>{
-      if (response.status === 200) {
-        response.json().then(res=>{
-          this.setState({
-            collections: this.state.collections.filter(coll=>{ console.log(coll); console.log(coll.id,' vs ',collId); return coll.id !== collId })
-          });
-        });
-      }
-    })
-    .catch(err=>{
-      console.log('THERE is an error', err);
-    });
-    */
   }
 
   render() {
@@ -68,10 +36,10 @@ class Collections extends Component {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">{collection.name}</h5>
-                      <p className="card-text">{collection.desc}</p>
+                      <p className="card-text">{collection.desc} - {collection.category_name}</p>
                     </div>
                     <div className="card-footer d-flex justify-content-end">
-                      <FaIcon icon="trash-alt" size='2x' className="mr-2" onClick={e=>{ this.deleteCollection(collection.id) } } />
+                      <FaIcon icon="trash-alt" size='2x' className="mr-2" onClick={e=>{ this.props.deleteCollection(collection.id) } } />
                       <Link to={`/edit/${collection.id}`} className="mr-2"> <FaIcon icon="edit" size='2x' /> </Link>
                       <FaIcon icon="star" size='2x' className={collection.favorited} onClick={this.markFavorite} />
                     </div>

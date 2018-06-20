@@ -25,6 +25,8 @@ class Header extends Component {
 
     this.showAddModal = this.showAddModal.bind(this);
     this.hideAddModal = this.hideAddModal.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.hideDeleteModal = this.hideDeleteModal.bind(this);
   }
 
   showAddModal() {
@@ -41,8 +43,18 @@ class Header extends Component {
     });
   }
 
-  componentDidMount() {
+  showDeleteModal() {
+    this.setState({
+      showDeleteModal: true,
+      showClassModal: 'show'
+    });
+  }
 
+  hideDeleteModal() {
+    this.setState({
+      showDeleteModal: false,
+      showClassModal: ''
+    });
   }
 
   render() {
@@ -69,13 +81,13 @@ class Header extends Component {
             <Link to='/profile'> <FaIcon icon="at" size="3x" className="mr-3" /> </Link>
           </div>
         </Box>
-        <AddModal updateCollections={this.props.updateCollections} showAddModal={this.state.showAddModal} hideAddModal={this.hideAddModal} showClassModal={this.state.showClassModal} />
+        <AddCollectionModal updateCollections={this.props.updateCollections} showAddModal={this.state.showAddModal} hideAddModal={this.hideAddModal} showClassModal={this.state.showClassModal} />
       </div>
     )
   }
 }
 
-class AddModal extends Component {
+class AddCollectionModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,7 +105,6 @@ class AddModal extends Component {
     fetch(`${backend.getAllCats}`)
     .then(res=>{
       res.json().then(items=>{
-        console.log('these are the items!!', items);
         this.setState({items:items});
       });
     })
@@ -103,7 +114,6 @@ class AddModal extends Component {
   }
 
   submitAddForm(evt) {
-    console.log('submit the form');
     if (this.state.col_name.trim() === '') {
       this.setState({submitError: true, alertClass: 'error'});  
     }
@@ -116,7 +126,8 @@ class AddModal extends Component {
       body: JSON.stringify({ 
         name: this.state.col_name,
         description: this.state.col_desc,
-        release_date: this.state.col_release_date
+        release_date: this.state.col_release_date,
+        category: this.state.searchedValue
       })
     })
     .then(res=>{
@@ -158,8 +169,6 @@ class AddModal extends Component {
     .catch(err=>{
       console.log('THERE is an error', err);
     });
-     
-    // this.setState({pills:this.state.pills.concat({id:newId+1, title:this.state.searchedValue}), maxID:newId+1})
   }
 
   render() {
@@ -235,34 +244,6 @@ class AddModal extends Component {
         </Modal.Footer>
       </Modal>
      )
-  }
-}
-
-class DeleteCollectionModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <Modal>
-        
-        <Modal.Header>
-          <Modal.Title>Confirm Deletion</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <h3>Confirm delete</h3>
-          <p>Are you sure you want to delete the selected collection?</p>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button bsStyle="info" className="mr-3" onClick={this.submitAddForm}>Delete</Button>
-          <Button bsStyle="primary" onClick={this.props.hideAddModal}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    )
   }
 }
 

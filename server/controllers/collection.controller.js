@@ -11,6 +11,15 @@ exports.create = (req, res) => {
   const collection = new Collection({
     name: req.body.name || "no_name",
     desc: req.body.description || '',
+    category: req.body.category || '',
+    release_date: req.body.release_date,
+    favorite: false
+  });
+
+  console.log('collection to be saved:', {
+    name: req.body.name || "no_name",
+    desc: req.body.description || '',
+    category: req.body.category || '',
     release_date: req.body.release_date,
     favorite: false
   });
@@ -39,6 +48,7 @@ exports.findAll = (req, res) => {
         id: col._id,
         name: col.name,
         desc: col.desc || '',
+        category_name: col.category,
         favorite: col.favorite
       }
     }));
@@ -57,6 +67,7 @@ exports.findOne = (req, res) => {
       id: data._id,
       name: data.name,
       desc: data.desc,
+      category: data.category,
       release_date: data.release_date,
       favorite: data.favorite
     });
