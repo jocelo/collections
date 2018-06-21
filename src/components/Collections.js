@@ -15,6 +15,7 @@ class Collections extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.collections);
   }
 
   markFavorite(ev) {
@@ -26,12 +27,13 @@ class Collections extends Component {
     return (
       <Row>
         <Col md={10} smOffset={1} className="mt-3">
-          <Panel bsStyle="primary">
+        {this.props.collections.map((category, id) => (
+          <Panel key={id} bsStyle="primary">
             <Panel.Heading>
-              <Panel.Title componentClass="h3">Panel heading</Panel.Title>
+              <Panel.Title componentClass="h3">{category.category_name || 'No categories'} <span className="badge badge-secondary">{category.data.length} Items</span> </Panel.Title>
             </Panel.Heading>
             <Panel.Body className="row">
-              {this.props.collections.map(collection => (
+              {category.data.map(collection => (
                 <Col sm={3} key={collection.id} className="mt-3">
                   <div className="card">
                     <div className="card-body">
@@ -48,6 +50,7 @@ class Collections extends Component {
               ))}
             </Panel.Body>
           </Panel>
+        ))}
         </Col>
       </Row>
     )

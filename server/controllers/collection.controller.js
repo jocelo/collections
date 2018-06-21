@@ -16,20 +16,13 @@ exports.create = (req, res) => {
     favorite: false
   });
 
-  console.log('collection to be saved:', {
-    name: req.body.name || "no_name",
-    desc: req.body.description || '',
-    category: req.body.category || '',
-    release_date: req.body.release_date,
-    favorite: false
-  });
-
   collection.save()
     .then(data=>{
       res.send({
         id: data._id,
         name: data.name,
         desc: data.desc,
+        category_name: data.category,
         favorite: data.favorite
       });
     })
@@ -43,15 +36,21 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   Collection.find()
   .then(data=>{
-    res.json(data.map(col=>{
-      return {
-        id: col._id,
-        name: col.name,
-        desc: col.desc || '',
-        category_name: col.category,
-        favorite: col.favorite
+    const distinctValues = [...new Set( data.map(item=>item.category) )];
+    const resData = distinctValues.map(category=>({
+        category_name: category,
+        data: data.filter(element=>element.category === category).map(coll=>({
+          id: coll._id,
+          name: coll.name,
+          desc: coll.desc,
+          category_name: coll.category,
+          favorite: coll.favorite,
+          release_date: coll.release_date
+        }))
       }
-    }));
+    ));
+
+    res.json(resData);
   })
   .catch(err=>{
     res.status(500).send({
