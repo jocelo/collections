@@ -1,10 +1,6 @@
 const Category = require('../models/category.model');
 
 exports.create = (req, res) => {
-	console.log('params', req.params);
-	console.log('body', req.body, req.body.length);
-	console.log('query', req.query);
-	// console.log('params', req.param('title'));
 	if (!req.body) {
 		return res.status(400).send({
 			message: "Category details cannot be empty"
@@ -30,7 +26,12 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 	Category.find()
 		.then(cats=>{
-			res.send(cats)
+			res.send(cats.map(cat=>{
+				return {
+					id: cat._id,
+					title: cat.title
+				}
+			}))
 		})
 		.catch(err=>{
 			res.status(500).send({

@@ -49,9 +49,9 @@ div.header a:hover {
   margin-left: 5px;
 }
 
-.add-category {
+a.add-category {
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: underline!important;
 }
 
 .favorited {

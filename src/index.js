@@ -8,7 +8,7 @@ import './css/index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import App from './App';
-import AddToCollection from './components/Add';
+import Edit from './components/Edit';
 import Profile from './components/Profile';
 
 const FourOhFour = () => (
@@ -24,8 +24,7 @@ const Router = () => (
 		<Grid fluid className="app">
 			<Switch>
 				<Route exact path="/" component={App} />
-				<Route exact path="/add" component={AddToCollection} />
-				<Route exact path="/edit/:id" component={AddToCollection} />
+				<Route exact path="/edit/:id" component={Edit} />
 				<Route exact path="/profile" component={Profile} />
 				<Route exact path="/details" component={detailsDiv} />
 
