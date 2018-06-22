@@ -7,5 +7,7 @@ module.exports = app =>{
 
 	app.post('/api/collection', collections.create);
 
+	app.post('/api/collection/:collId', collections.update);
+
 	app.delete('/api/collection/:collId', collections.delete);
 };
