@@ -23,9 +23,12 @@ class AddCollectionModal extends Component {
   componentDidMount() {
     fetch(`${backend.getAllCats}`)
     .then(res=>{
-      res.json().then(items=>{
-        this.setState({items:items});
-      });
+      console.log('res', res);
+      return res.json();
+    })
+    .then(items=>{
+      console.log('res', items);
+      this.setState({items:items});
     })
     .catch(err=>{
       console.log('THERE is an error', err);
@@ -36,6 +39,12 @@ class AddCollectionModal extends Component {
     if (this.state.col_name.trim() === '') {
       this.setState({submitError: true, alertClass: 'error'});  
     }
+    console.log( 'data:', JSON.stringify({ 
+        name: this.state.col_name,
+        description: this.state.col_desc,
+        release_date: this.state.col_release_date,
+        category: this.state.searchedValue
+      } ));
     //this.setState({alertClass: 'error', showIt: true});
     fetch(`${backend.addCollection}`, {
       method: 'POST',
@@ -50,11 +59,13 @@ class AddCollectionModal extends Component {
       })
     })
     .then(res=>{
-      res.json().then(dataSaved=>{
-        console.log('Collection saved!!', res);
+      console.log('collection saved step 1');
+      return res.json();
+    })
+    .then(dataSaved=>{
+        console.log('Collection saved step 2!!');
         this.props.updateCollections(dataSaved);
         this.props.hideAddModal();
-      });
     })
     .catch(err=>{
       console.log('THERE is an error', err);
@@ -78,11 +89,13 @@ class AddCollectionModal extends Component {
       body: JSON.stringify({ title: this.state.searchedValue })
     })
     .then(res=>{
-      res.json().then(saveConfirmData=>{
-        this.setState({
-          items: this.state.items.concatenate({id: saveConfirmData._id, title: saveConfirmData.title}),
-          searchedValue: saveConfirmData.title
-        });
+      return res.json();
+    })
+    .then(saveConfirmData=>{
+      console.log('saveConfirmData', saveConfirmData);
+      this.setState({
+        items: this.state.items.concatenate({id: saveConfirmData._id, title: saveConfirmData.title}),
+        searchedValue: saveConfirmData.title
       });
     })
     .catch(err=>{

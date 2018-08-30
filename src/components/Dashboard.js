@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from 'react-bootstrap';
 import Header from './Header';
 import Collections from './Collections';
+import EmptyCollection from './EmptyCollection';
 import backend from './backend.js';
 
 class Dashboard extends Component {
@@ -16,7 +17,7 @@ class Dashboard extends Component {
     this.deleteCollection = this.deleteCollection.bind(this);
 	}
 
-	 updateCollections(newColl) {
+	updateCollections(newColl) {
     this.setState({
       collections: [...this.state.collections, newColl]
     });
@@ -32,12 +33,15 @@ class Dashboard extends Component {
       })
       .then(response=>{
         if (response.status === 200) {
-          response.json().then(res=>{
-            this.setState({
-              collections: this.state.collections.filter(coll=>{ console.log(coll); console.log(coll.id,' vs ',collId); return coll.id !== collId })
-            });
-          });
+          return response.json();
+        } else {
+          throw 'Error with backend: TODO';
         }
+      })
+      .then(res=>{
+        this.setState({
+          collections: this.state.collections.filter(coll=>{ console.log(coll); console.log(coll.id,' vs ',collId); return coll.id !== collId })
+        });
       })
       .catch(err=>{
         throw(err);
@@ -48,19 +52,25 @@ class Dashboard extends Component {
   componentDidMount(){
     fetch(`${backend.getCollections}`)
     .then((response)=>{
-      response.json().then(data=>{
-      	console.log(data);
-        this.setState({collections:data});
-      });
+      return response.json();
+    })
+    .then(data=>{
+      this.setState({collections:data});
     })
     .catch(err=>{throw(err)});
   }
 
 	render() {
+    let DashboardWrapper;
+    if (this.state.collections.length === 0) {
+      DashboardWrapper = <EmptyCollection />;
+    } else {
+      DashboardWrapper = <Collections collections={this.state.collections} deleteCollection={this.deleteCollection} />
+    }
 		return (
 			<div>
 			  <Header collections={this.state.collections} updateCollections={this.updateCollections} />
-        <Collections collections={this.state.collections} deleteCollection={this.deleteCollection} />
+        {DashboardWrapper}
         <Grid />
 			</div>
 		)

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import backend from './backend.js';
 import FaIcon from '@fortawesome/react-fontawesome';
 
 import { Panel, Col, Row } from 'react-bootstrap';
@@ -31,7 +30,7 @@ class Collections extends Component {
           <Panel key={id} bsStyle="primary">
             <Panel.Heading>
               <Panel.Title componentClass="h3">
-                {category.category_name || 'No categories'} <span className="badge badge-secondary pull-right">{category.data.length} Items</span> 
+                {category.category_name || 'No categories'} <span className="badge badge-secondary pull-right">0 Items</span> 
               </Panel.Title>
 
             </Panel.Heading>

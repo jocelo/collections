@@ -32,6 +32,7 @@ mongoose.connect(dbConfig.url)
 
 require('./server/routes/category.routes')(app);
 require('./server/routes/collection.routes')(app);
+require('./server/routes/threed.routes')(app);
 
 app.get('/api', (req, res)=> {
 	res.json({status:'ok', message:'Welcome to collections API v0.06.18'});

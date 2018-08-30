@@ -6,7 +6,7 @@ import backend from './backend.js';
 import DatePicker from 'react-date-picker';
 import ReactAutocomplete from 'react-autocomplete';
 
-import { Grid, Col, Button, Panel, Alert, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Grid, Col, Button, Panel, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 class Edit extends Component {
   constructor(props) {

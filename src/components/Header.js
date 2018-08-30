@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FaIcon from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
-import { Modal, Button, ControlLabel, Form, FormGroup, FormControl, Col } from 'react-bootstrap';
 import AddCollectionModal from './AddCollectionModal';
 
 const Box = styled.div`
