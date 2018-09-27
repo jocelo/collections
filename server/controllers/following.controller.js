@@ -9,6 +9,7 @@ exports.getDefaultUsers = (req, res) => {
         id: 1001,
         img: 'poe.png',
         name: 'E. APoe',
+        following: true,
         collections: [
           { catid: 10, category: 'books', ammount: '15' },
           { catid: 11, category: 'music albums', ammount: '80' },
@@ -20,6 +21,7 @@ exports.getDefaultUsers = (req, res) => {
         id: 1002,
         img: 'einstein.png',
         name: 'A. Stein',
+        following: false,
         collections: [
           { catid: 15, category: 'articles', ammount: '89' },
           { catid: 16, category: 'snes games', ammount: '15' },
@@ -34,6 +36,7 @@ exports.getDefaultUsers = (req, res) => {
         id: 1003,
         img: 'house.png',
         name: 'Gre. Ouse',
+        following: false,
         collections: [
           { catid: 23, category: 'music albums', ammount: '365' },
           { catid: 24, category: 'music dvd', ammount: '253' },
@@ -43,6 +46,7 @@ exports.getDefaultUsers = (req, res) => {
         id: 1004,
         img: 'white.png',
         name: 'Heis. Berg',
+        following: false,
         collections: [
           { catid: 26, category: 'books', ammount: '15' },
           { catid: 27, category: 'magazines', ammount: '80' },
@@ -53,6 +57,7 @@ exports.getDefaultUsers = (req, res) => {
         id: 1005,
         img: 'bean.png',
         name: 'Bean',
+        following: true,
         collections: [
           { catid: 30, category: 'books', ammount: '154' },
           { catid: 31, category: 'gba games', ammount: '25' },
@@ -70,6 +75,32 @@ exports.getDefaultUsers = (req, res) => {
 }
 
 exports.addFollower = (req, res) => {
+  
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Missing details for following model creation"
+    });
+  }
+
+  const followModel = new Following({
+    user_id: req.body.userId,
+    following_user_id: req.body.userFollowingId
+  });
+  res.status(200).send({msg: 'sall good'});
+}
+
+exports.removeFollower = (req, res) => {
+  
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Missing details for following model creation"
+    });
+  }
+
+  const followModel = new Following({
+    user_id: req.body.userId,
+    following_user_id: req.body.userFollowingId
+  });
   res.status(200).send({msg: 'sall good'});
 }
 

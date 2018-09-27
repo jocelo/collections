@@ -83,3 +83,12 @@ a.add-category {
   top: 6px;
   right: 20px;
 }
+
+.follow-icon {
+  &.fa-plus-circle {
+    color: mediumseagreen;  
+  }
+  &.fa-minus-circle {
+    color: tomato;  
+  }
+}

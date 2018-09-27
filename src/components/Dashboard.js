@@ -10,7 +10,11 @@ class Dashboard extends Component {
 		super(props);
 
 		this.state = {
-			collections: []
+			collections: [],
+      messages: [{
+        id: 101,
+        text: 'You are now following "caquita de perro"'
+      }]
 		};
 
     this.updateCollections = this.updateCollections.bind(this);
@@ -63,13 +67,13 @@ class Dashboard extends Component {
 	render() {
     let DashboardWrapper;
     if (this.state.collections.length === 0) {
-      DashboardWrapper = <EmptyCollection />;
+      DashboardWrapper = <EmptyCollection messages={this.state.messages} />;
     } else {
       DashboardWrapper = <Collections collections={this.state.collections} deleteCollection={this.deleteCollection} />
     }
 		return (
 			<div>
-			  <Header collections={this.state.collections} updateCollections={this.updateCollections} />
+			  <Header collections={this.state.collections} updateCollections={this.updateCollections} messages={this.state.messages} />
         {DashboardWrapper}
         <Grid />
 			</div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Panel } from 'react-bootstrap';
+import { Col, Row, Panel, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import styled from 'styled-components';
 import FaIcon from '@fortawesome/react-fontawesome';
 import backend from './backend';
@@ -25,11 +25,31 @@ function HasMoreCollections(props) {
 class EmptyCollection extends Component {
 
   addFollower(whoToFollow) {
+    console.log('adding a dude!');
+    return;
     fetch(`${backend.addFollower}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: this.state.userId,
+        followingUserId: whoToFollow
+      })
+    })
+    .then(_=>{
+      return _.json();
+    })
+    .then(data=>{
+      console.log('final data', data);
+    });
+  }
+
+  removeFollower(whoIsIt) {
+    console.log('removing a dude!');
+    return;
+    fetch(`${backend.removeFollower}`, {
       method: 'POST',
       body: JSON.stringify({ 
         userId: this.state.userId,
-        followingUserId: whoToFollow
+        followingUserId: whoIsIt
       })
     })
     .then(_=>{
@@ -48,6 +68,8 @@ class EmptyCollection extends Component {
     then(data=>{
       this.setState({topUsers: data.topUsers});
     });
+
+    // document.getElementsByClassName('[data-toggle="tooltip"]');
   }
 
   constructor(props) {
@@ -61,6 +83,23 @@ class EmptyCollection extends Component {
   }
 
   render() {
+    const tooltip = (
+      <Tooltip id="tooltip">
+        <strong>Holy guacamole!</strong> Check this info.
+      </Tooltip>
+    );
+
+    function FollowIcon(props) {
+      let template;
+      console.log('props following', props.following);
+      if (props.following) {
+        template = <FaIcon icon="plus-circle" size="3x" onClick={props.followFn.bind(this, props.id)} className="follow-icon" />;
+      } else {
+        template = <FaIcon icon="minus-circle" size="3x" onClick={props.followFn.bind(this, props.id)} className="follow-icon" />;
+      }
+      return template;
+    } 
+
     return <Row>
       <Col md={10} smOffset={1} className="mt-3 mb-5">
         <h3>You don't have any collections yet... you can do one of two things:</h3>
@@ -73,20 +112,21 @@ class EmptyCollection extends Component {
       </Row> </Col>
       <Col md={6}> <h3>Start following someone:</h3>
         <Row className="mt-5">
-          { this.state.topUsers.map(item=>(
-            <Col md={3} key={item.id}>
+          { this.state.topUsers.map(person=>(
+            <Col md={3} key={person.id}>
               <Panel>
                 <Panel.Body className="text-center">
-                  <FaIcon icon="plus-circle" size="3x" onClick={this.addFollower.bind(this, item.id)} className="follow-icon" />
-                  <img src={require('./img/'+item.img)} height="100px" /> 
+                  <FollowIcon id={person.id} followFn={person.following ? this.addFollower : this.removeFollower} following={person.following}></FollowIcon>
+
+                  <img src={require('./img/'+person.img)} height="100px" alt="user icon" /> 
                 </Panel.Body>
                 <Panel.Footer>
-                  { item.collections.slice(0,3).map(col=>(
+                  { person.collections.slice(0,3).map(col=>(
                     <div key={col.catid}>
                       {col.category} <span className="pull-right">{col.ammount}</span>
                     </div>
                   ))}
-                  <HasMoreCollections noCol={item.collections.length-3}></HasMoreCollections>
+                  <HasMoreCollections noCol={person.collections.length-3}></HasMoreCollections>
                 </Panel.Footer>
               </Panel>
             </Col>  

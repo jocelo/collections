@@ -5,7 +5,9 @@ module.exports = app => {
 
 	app.get('/api/default', followers.getDefaultUsers);
 
-	app.post('/api/addFollower', followers.addFollower);
+	app.post('/api/follower/add', followers.addFollower);
+
+	app.post('/api/follower/remove', followers.removeFollower);
 
 	// app.get('/api/following', followers.getListFollowingPeople);
 	

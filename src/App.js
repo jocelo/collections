@@ -7,6 +7,7 @@ import faHome           from '@fortawesome/fontawesome-free-solid/faHome';
 import faSearch         from '@fortawesome/fontawesome-free-solid/faSearch';
 import faBars           from '@fortawesome/fontawesome-free-solid/faBars';
 import faPlusCircle     from '@fortawesome/fontawesome-free-solid/faPlusCircle';
+import faMinusCircle    from '@fortawesome/fontawesome-free-solid/faMinusCircle';
 import faAt             from '@fortawesome/fontawesome-free-solid/faAt';
 import faBell           from '@fortawesome/fontawesome-free-solid/faBell';
 import faTimes          from '@fortawesome/fontawesome-free-solid/faTimes';
@@ -22,8 +23,8 @@ import Dashboard from './components/Dashboard';
 
 import './css/App.scss';
 
-fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faAt, 
-  faBell, faHome, faTimes, faStar, faEdit, faTrashAlt, faImages, faCodepen);
+fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faMinusCircle, 
+  faAt, faBell, faHome, faTimes, faStar, faEdit, faTrashAlt, faImages, faCodepen);
 
 class App extends Component {
   constructor(props) {

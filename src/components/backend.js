@@ -7,7 +7,8 @@ const backend = {
 	addCollection: 'http://localhost:8088/api/collection/',
 	updateCollection:  'http://localhost:8088/api/collection/',
 	deleteCollection: 'http://localhost:8088/api/collection/',
-	addFollower: `${serverUrl}/addFollower`,
+	addFollower: `${serverUrl}/follower/add`,
+	removeFollower: `${serverUrl}/follower/remove`,
 	getFollowers: `${serverUrl}/followers`,
 	getDefaultUsersToFollow: `${serverUrl}/default`
 }
