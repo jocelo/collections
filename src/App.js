@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
 import fontawesome      from '@fortawesome/fontawesome'
-import brands           from '@fortawesome/fontawesome-free-brands';
 import faCheckSquare    from '@fortawesome/fontawesome-free-solid/faCheckSquare';
 import faCoffee         from '@fortawesome/fontawesome-free-solid/faCoffee';
 import faHome           from '@fortawesome/fontawesome-free-solid/faHome';
-import faAdversal       from '@fortawesome/fontawesome-free-brands/faAdversal';
 import faSearch         from '@fortawesome/fontawesome-free-solid/faSearch';
 import faBars           from '@fortawesome/fontawesome-free-solid/faBars';
 import faPlusCircle     from '@fortawesome/fontawesome-free-solid/faPlusCircle';
@@ -16,12 +14,16 @@ import faStar           from '@fortawesome/fontawesome-free-solid/faStar';
 import faEdit           from '@fortawesome/fontawesome-free-solid/faEdit';
 import faTrashAlt       from '@fortawesome/fontawesome-free-solid/faTrashAlt';
 import faImages         from '@fortawesome/fontawesome-free-solid/faImages';
+import brands           from '@fortawesome/fontawesome-free-brands';
+import faAdversal       from '@fortawesome/fontawesome-free-brands/faAdversal';
+import faCodepen        from '@fortawesome/fontawesome-free-brands/faCodepen';
 
 import Dashboard from './components/Dashboard';
 
-import './css/App.css';
+import './css/App.scss';
 
-fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faAt, faBell, faHome, faTimes, faStar, faEdit, faTrashAlt, faImages);
+fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faAt, 
+  faBell, faHome, faTimes, faStar, faEdit, faTrashAlt, faImages, faCodepen);
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +32,7 @@ class App extends Component {
   }
 
   componentDidMount(){
+
   }
 
   render() {

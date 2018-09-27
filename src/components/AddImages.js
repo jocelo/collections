@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
 import backend from './backend';
 import Header from './Header';
-
 import { Grid, Panel, Row, Col } from 'react-bootstrap';
+import FaIcon from '@fortawesome/react-fontawesome';
+
+import '../css/images.scss';
 
 class AddImages extends Component {
   constructor(props) {
@@ -14,11 +15,12 @@ class AddImages extends Component {
   }
 
   componentDidMount() {
-    fetch(`${backend.getCollection}/${this.props.match.params.id}`)
+    fetch(`${backend.getCollection}${this.props.match.params.id}`)
     .then(response=>{
       response.json().then(data=>{
         this.setState({
-          originalTitle: data.name
+          originalTitle: data.name,
+          category: data.category_name || 'No category'
         });
       });
     })
@@ -34,22 +36,22 @@ class AddImages extends Component {
         <Grid className="mt-5">
           <Panel bsStyle="info">
             <Panel.Heading>
-              <Panel.Title componentClass="h3"><strong>{this.state.originalTitle}</strong> () </Panel.Title>
+              <Panel.Title componentClass="h3"><strong>{this.state.originalTitle}</strong> ({this.state.category}) </Panel.Title>
             </Panel.Heading>
             <Panel.Body>
               <Row>
                 <Col md={8}>
                   Drag images here
                   <Row>
-                    <Col mdOffset={4} md={2} style={{'background-color': 'red', 'height': '70px'}}> Up </Col>
+                    <Col mdOffset={4} md={2}  className="img-placeholder-top"> Top Image </Col>
                   </Row>
                   <Row>
-                    <Col mdOffset={2} md={2} style={{'background-color': 'red', 'height': '280px'}}> Le </Col>
-                    <Col md={2} style={{'background-color': 'red', 'height': '280px'}}> Fr </Col>
-                    <Col md={2} style={{'background-color': 'red', 'height': '280px'}}> Ri </Col>
+                    <Col mdOffset={2} md={2} className="img-placeholder-left"> Left Image </Col>
+                    <Col md={2} className="img-placeholder-front"> Front Image </Col>
+                    <Col md={2} className="img-placeholder-right"> Right Image </Col>
                   </Row>
                   <Row>
-                    <Col mdOffset={4} md={2} style={{'background-color': 'red', 'height': '70px'}}> Do </Col>
+                    <Col mdOffset={4} md={2} className="img-placeholder-bottom"> Bottom Image </Col>
                   </Row>
                 </Col>
                 <Col md={4}>
@@ -58,6 +60,7 @@ class AddImages extends Component {
               </Row>
             </Panel.Body>
             <Panel.Footer>
+              <FaIcon icon="codePen" /> 3D
             </Panel.Footer>
           </Panel>
         </Grid>

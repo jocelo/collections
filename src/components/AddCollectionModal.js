@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import backend from  './backend.js';
+import backend from  './backend';
 
 import { Modal, Button, ControlLabel, Form, FormGroup, FormControl, Col } from 'react-bootstrap';
 
@@ -23,11 +23,9 @@ class AddCollectionModal extends Component {
   componentDidMount() {
     fetch(`${backend.getAllCats}`)
     .then(res=>{
-      console.log('res', res);
       return res.json();
     })
     .then(items=>{
-      console.log('res', items);
       this.setState({items:items});
     })
     .catch(err=>{
@@ -171,8 +169,8 @@ class AddCollectionModal extends Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button bsStyle="info" className="mr-3" onClick={this.submitAddForm}>Save</Button>
-          <Button bsStyle="danger" onClick={this.props.hideAddModal}>Close</Button>
+          <Button className="mr-3 btn-lg" onClick={this.submitAddForm}>Save</Button>
+          <Button className="btn-lg" onClick={this.props.hideAddModal}>Close</Button>
         </Modal.Footer>
       </Modal>
      )

@@ -1,11 +1,15 @@
+const serverUrl = 'http://localhost:8088/api';
 const backend = {
-	getAllCats: 'http://localhost:8000/categories/',
-	addCategory: 'http://localhost:8000/category/',
-	getCollections: 'http://localhost:8000/collections/',
-	getCollection: 'http://localhost:8000/collection/',
-	addCollection: 'http://localhost:8000/collection/',
-	updateCollection:  'http://localhost:8000/collection/',
-	deleteCollection: 'http://localhost:8000/collection/'
+	getAllCats: 'http://localhost:8088/api/categories/',
+	addCategory: 'http://localhost:8088/api/category/',
+	getCollections: 'http://localhost:8088/api/collections/',
+	getCollection: 'http://localhost:8088/api/collection/',
+	addCollection: 'http://localhost:8088/api/collection/',
+	updateCollection:  'http://localhost:8088/api/collection/',
+	deleteCollection: 'http://localhost:8088/api/collection/',
+	addFollower: `${serverUrl}/addFollower`,
+	getFollowers: `${serverUrl}/followers`,
+	getDefaultUsersToFollow: `${serverUrl}/default`
 }
 
 /*

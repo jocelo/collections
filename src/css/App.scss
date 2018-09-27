@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -31,17 +37,20 @@
   to { transform: rotate(360deg); }
 }
 
-div.header a {
-  color: GhostWhite;
+div.header {
+  & a {
+    color: GhostWhite;
+  }
+
+  & a:visited {
+    color: GhostWhite;
+  }
+
+  & a:hover {
+    color: Orange;
+  }
 }
 
-div.header a:visited {
-  color: GhostWhite;
-}
-
-div.header a:hover {
-  color: Orange;
-}
 
 .label-icon {
   border-left: 3px solid white;
@@ -63,4 +72,14 @@ a.add-category {
 }
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
+}
+
+.divider {
+  font-size: 4rem;
+}
+
+.follow-icon {
+  position: absolute;
+  top: 6px;
+  right: 20px;
 }

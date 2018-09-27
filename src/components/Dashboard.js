@@ -55,7 +55,7 @@ class Dashboard extends Component {
       return response.json();
     })
     .then(data=>{
-      this.setState({collections:data});
+      this.setState({collections:[]});
     })
     .catch(err=>{throw(err)});
   }
