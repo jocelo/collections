@@ -27,24 +27,23 @@ class EmptyCollection extends Component {
   addFollower(whoToFollow) {
     fetch(`${backend.addFollower}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify({ 
-        name: this.state.col_name,
-        description: this.state.col_desc,
-        release_date: this.state.col_release_date,
-        category: this.state.searchedValue
+        userId: this.state.userId,
+        followingUserId: whoToFollow
       })
     })
-
-    fetch(`${backend.getAllCats}`)
+    .then(_=>{
+      return _.json();
+    })
+    .then(data=>{
+      console.log('final data', data);
+    });
   }
 
   componentDidMount() {
     fetch(`${backend.getDefaultUsersToFollow}`)
-    .then(response=>{
-      return response.json();
+    .then(_=>{
+      return _.json();
     }).
     then(data=>{
       this.setState({topUsers: data.topUsers});
@@ -54,7 +53,8 @@ class EmptyCollection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topUsers: []
+      topUsers: [],
+      userId: 1
     };
 
     this.addFollower = this.addFollower.bind(this);

@@ -69,6 +69,10 @@ exports.getDefaultUsers = (req, res) => {
       }]}))
 }
 
+exports.addFollower = (req, res) => {
+  res.status(200).send({msg: 'sall good'});
+}
+
 /*
 
 exports.follow = (req, res) => {
