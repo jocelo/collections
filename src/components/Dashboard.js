@@ -55,11 +55,11 @@ class Dashboard extends Component {
 
   componentDidMount(){
     fetch(`${backend.getCollections}`)
-    .then((response)=>{
-      return response.json();
+    .then(_=>{
+      return _.json();
     })
     .then(data=>{
-      this.setState({collections:[]});
+      this.setState({collections:data});
     })
     .catch(err=>{throw(err)});
   }

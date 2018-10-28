@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ImageModelSchema = mongoose.Schema({
+const Image3DModelSchema = mongoose.Schema({
   id: Number,
   collection_id: Number,
   front_img: { data: Buffer, contentType: String },
@@ -13,4 +13,4 @@ const ImageModelSchema = mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('ImageModelSchema', ImageModelSchema);
+module.exports = mongoose.model('Image3DModelSchema', Image3DModelSchema);

@@ -1,25 +1,56 @@
 .img-placeholder-left {
 	border: 1px dotted gray;
 	height: 280px;
+	padding: 0;
 }
 
 .img-placeholder-right {
 	border: 1px dotted gray;
 	height: 280px;
+	padding: 0;
 }
 
 .img-placeholder-front {
 	border: 1px dotted gray;
 	height: 280px;
+	width: 150px!important;
 	margin: 2px;
+	padding: 0;
 }
 
 .img-placeholder-top {
 	border: 1px dotted gray;
 	height: 70px;
+	padding: 0;
 }
 
 .img-placeholder-bottom {
 	border: 1px dotted gray;
 	height: 70px;
+	padding: 0;
+}
+
+.img-uploader {
+	width: 100px;
+	height: 100px;
+	border: 2px dotted black;
+	border-radius: 5px;
+}
+
+.dropzone-container {
+	text-align: center;
+	border: 1px dotted gray;
+	width: 100px;
+	height: 100px;
+	color: gray;
+}
+
+.dropzone-container:hover {
+	color: black;
+	border: 1px dotted black;
+	cursor: cell;
+}
+
+.dropzone-main {
+	margin-top: 10px;
 }

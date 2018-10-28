@@ -15,16 +15,18 @@ import faStar           from '@fortawesome/fontawesome-free-solid/faStar';
 import faEdit           from '@fortawesome/fontawesome-free-solid/faEdit';
 import faTrashAlt       from '@fortawesome/fontawesome-free-solid/faTrashAlt';
 import faImages         from '@fortawesome/fontawesome-free-solid/faImages';
-import brands           from '@fortawesome/fontawesome-free-brands';
 import faAdversal       from '@fortawesome/fontawesome-free-brands/faAdversal';
 import faCodepen        from '@fortawesome/fontawesome-free-brands/faCodepen';
+import faArrowLeft      from '@fortawesome/fontawesome-free-solid/faArrowLeft';
+import faCloudUploadAlt from '@fortawesome/fontawesome-free-solid/faCloudUploadAlt';
+import faCaretDown      from '@fortawesome/fontawesome-free-solid/faCaretDown';
 
 import Dashboard from './components/Dashboard';
 
 import './css/App.scss';
 
-fontawesome.library.add(brands, faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faMinusCircle, 
-  faAt, faBell, faHome, faTimes, faStar, faEdit, faTrashAlt, faImages, faCodepen);
+fontawesome.library.add(faCheckSquare, faCoffee, faAdversal, faSearch, faBars, faPlusCircle, faMinusCircle, 
+  faAt, faBell, faHome, faTimes, faStar, faEdit, faTrashAlt, faImages, faCodepen, faArrowLeft, faCloudUploadAlt, faCaretDown);
 
 class App extends Component {
   constructor(props) {

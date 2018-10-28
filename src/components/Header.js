@@ -6,7 +6,7 @@ import AddCollectionModal from './AddCollectionModal';
 
 const Box = styled.div`
   height: 50px;
-  background-color: CadetBlue;
+  background-color: orangered;
 `;
 
 class Header extends Component {
@@ -61,7 +61,7 @@ class Header extends Component {
           <div className="col d-flex flex-row align-items-center">
             <Link to='/'> <FaIcon icon="home" size="3x" className="mr-3 ml-3" /> </Link>
             <Link to='/'> <FaIcon icon="bars" size="3x" className="mr-3" /> </Link>
-            <a onClick={this.showAddModal}><FaIcon icon="plus-circle" size="3x" className="mr-3" /></a>
+            <a onClick={this.showAddModal}><FaIcon icon="plus-circle" size="3x" className="mr-3 cWhite" /></a>
           </div>
           <div className="col align-self-center">
             <div className="input-group">

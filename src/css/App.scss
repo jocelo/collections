@@ -38,15 +38,15 @@ body {
 }
 
 div.header {
-  & a {
+  & a, .cWhite {
     color: GhostWhite;
   }
 
-  & a:visited {
+  & a:visited, .cWhite:visited {
     color: GhostWhite;
   }
 
-  & a:hover {
+  & a:hover, .cWhite:hover {
     color: Orange;
   }
 }

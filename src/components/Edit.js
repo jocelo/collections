@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 import AlertMsg from './AlertMsg';
 import backend from './backend.js';
@@ -7,6 +8,7 @@ import DatePicker from 'react-date-picker';
 import ReactAutocomplete from 'react-autocomplete';
 
 import { Grid, Col, Button, Panel, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import FaIcon from '@fortawesome/react-fontawesome';
 
 class Edit extends Component {
   constructor(props) {
@@ -32,21 +34,22 @@ class Edit extends Component {
 
   componentDidMount() {
     if ('id' in this.props.match.params) {
-      fetch(`${backend.getCollection}/${this.props.match.params.id}`)
-      .then(response=>{
-        response.json().then(data=>{
-          console.log('details from the object');
-          console.log(data);
-          this.setState({
-            searchedValue: '',
-            originalTitle: data.name,
-            data: {
-              id: data.id,
-              name: data.name,
-              desc: data.desc,
-              category: data.category_name
-            }
-          });
+      fetch(`${backend.collection}/${this.props.match.params.id}`)
+      .then(_=>{
+        return _.json();
+      })
+      .then(data=>{
+        console.log('details from the object');
+        console.log(data);
+        this.setState({
+          searchedValue: '',
+          originalTitle: data.name,
+          data: {
+            id: data.id,
+            name: data.name,
+            desc: data.desc,
+            category: data.category_name
+          }
         });
       })
       .catch(err=>{
@@ -102,7 +105,7 @@ class Edit extends Component {
     return (
       <div>
         <Header />
-        <Grid className="mt-5">
+        <Grid className="mt-5 content">
           <Panel bsStyle="info">
             <Panel.Heading>
               <Panel.Title componentClass="h3">Edit {this.state.originalTitle}</Panel.Title>
@@ -156,8 +159,16 @@ class Edit extends Component {
               <AlertMsg showIt={this.state.submitError} useClass={this.state.alertClass} closeAlert={this.closeAlertMsg} />
             </Panel.Body>
             <Panel.Footer>
-              <div className="pull-right" >
-                <Button bsStyle="info" className="mr-3" onClick={this.saveCollection}>Save</Button>
+              <div className="d-flex justify-content-end" >
+                <Link to="/">
+                  <Button bsStyle="white" className="mr-3 btn btn-lg">
+                    <FaIcon icon="arrow-left" /> Cancel
+                  </Button>
+                </Link>
+                <Button bsStyle="white" className="mr-3 btn btn-lg" onClick={_=>{this.props.deleteFn(this.state.data.id)}}>
+                  <FaIcon icon="trash-alt" className="mr-2" /> Delete
+                </Button>
+                <Button bsStyle="white" className="mr-3 btn btn-lg" onClick={this.saveCollection}>Save</Button>
               </div>
             </Panel.Footer>
           </Panel>

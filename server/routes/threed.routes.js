@@ -1,7 +1,7 @@
 module.exports = app =>{
-  const threeDmodel = require('../controllers/threed.controller');
+  const threeD = require('../controllers/threed.controller');
 
-  app.post('/api/threeD', threeDmodel.create);
+  app.post('/api/threeD', threeD.create);
 
-  app.put('/api/category/:catID', threeDmodel.update);
+  app.put('/api/category/:catID', threeD.update);
 };

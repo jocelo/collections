@@ -34,6 +34,7 @@ require('./server/routes/category.routes')(app);
 require('./server/routes/collection.routes')(app);
 require('./server/routes/threed.routes')(app);
 require('./server/routes/followers.routes')(app);
+require('./server/routes/image.routes')(app);
 
 app.get('/api', (req, res)=> {
 	res.json({status:'ok', message:'Welcome to collections API v0.09.18'});
