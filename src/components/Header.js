@@ -6,7 +6,7 @@ import AddCollectionModal from './AddCollectionModal';
 
 const Box = styled.div`
   height: 50px;
-  background-color: orangered;
+  background-color: salmon;
 `;
 
 class Header extends Component {

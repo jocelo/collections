@@ -39,7 +39,7 @@ exports.update = (req, res)=> {
 
 exports.getAll = (req, res) => {
   console.log('get all by user id');
-  console.log('body:', req.body);
+  console.log('body:', req.params);
 
   Image.find()
   .then(data=>{

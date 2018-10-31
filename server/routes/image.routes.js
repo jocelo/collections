@@ -1,7 +1,7 @@
 module.exports = app =>{
   const image = require('../controllers/image.controller');
 
-  app.get('/api/pictures', image.getAll);
+  app.get('/api/pictures/:collectionId', image.getAll);
 
   app.post('/api/picture', image.add);
 

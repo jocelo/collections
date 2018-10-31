@@ -54,3 +54,49 @@
 .dropzone-main {
 	margin-top: 10px;
 }
+
+.img-placeholder-front,
+.img-placeholder-left {
+	position: relative;
+
+	&:hover .edit {
+		display: block;
+	}
+
+	& button {
+		background-color: transparent;
+		border: 0;
+		color: white;
+	}
+}
+
+.edit {
+	padding-top: 7px;	
+	padding-left: 7px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	
+	& a {
+		color: white;
+	}
+}
+
+.edit-img {
+	padding-top: 2px;	
+	padding-right: 2px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+
+.main-image:hover .edit-img{
+	display: block;
+}
+
+
+.main-image {
+	position: relative;
+}

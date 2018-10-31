@@ -18,40 +18,40 @@ class AddImages extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      collectionId: props.match.params.id,
       originalTitle: '',
       dropZoneDisabled: false,
-      photos: [
-        { key: 1,
-          cloudName: 'mycollections',
-          publicId: 'barbies/barbie_1',
-          width: 100,
-          height: 100
-        }, {
-          key: 2,
-          cloudName: 'mycollections',
-          publicId: 'barbies/barbie_2',
-          width: 100,
-          height: 100
-        }, {
-          key: 3,
-          cloudName: 'mycollections',
-          publicId: 'barbies/barbie_3',
-          width: 100,
-          height: 100
-        }
-      ]
+      photos: [],
+      model3d: {
+        top_face: 'barbies/empty',
+        right_face: 'barbies/b_right',
+        bottom_face: 'barbies/empty',
+        left_face: 'barbies/b_left',
+        front_face: 'barbies/b_front'
+      },
+      IMGTYPE: {
+        M_U: 'mass_upload',
+        B_T: 'box_top_face',
+        B_R: 'box_right_face',
+        B_B: 'box_bottom_face',
+        B_L: 'box_left_face',
+        B_F: 'box_front_face'
+      }
     };
 
-    //this.uploadFile = this.uploadFile.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.deleteImg = this.deleteImg.bind(this);
   }
 
-  onDrop(files) {
-    console.log('caquita dropped');
-    console.log(files);
-    this.uploadFile(files[0]);
+  onDrop(accepted, rejected, imgType) {
+    this.uploadFile(accepted[0], imgType);
   }
 
-  uploadFile(file) {
+  deleteImg(imgId) {
+    console.log('will delete', imgId);
+  }
+
+  uploadFile(file, imgType) {
     const that = this;
 
     var url = `https://api.cloudinary.com/v1_1/mycollections/upload`;
@@ -67,15 +67,7 @@ class AddImages extends Component {
     xhr.send(fd);
 
     // Reset the upload progress bar
-    // document.getElementById('progress').style.width = 0;
     
-    // Update progress (can be used to show progress indicator)
-    xhr.upload.addEventListener("progress", function(e) {
-      // var progress = Math.round((e.loaded * 100.0) / e.total);
-      // document.getElementById('progress').style.width = progress + "%";
-      document.getElementById('caquita-here').append('que pasa aqui');
-    });
-
     xhr.onreadystatechange = function(e) {
       console.log('on ready state change');
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -89,7 +81,6 @@ class AddImages extends Component {
         //var img = new Image(); // HTML5 Constructor
         //img.src = tokens.join('/');
         //img.alt = response.public_id;
-        console.log('response from cloudinary', response);
 
         fetch(`${backend.addPicture}`, {
           method: 'POST',
@@ -97,6 +88,7 @@ class AddImages extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({ 
+            collection_id: that.state.collectionId,
             collection: 'barbies',
             public_id: response.public_id
           })
@@ -106,15 +98,26 @@ class AddImages extends Component {
         })
         .then(data=>{
           console.log('response from backend server', data);
-          that.setState({
-            photos: [...that.state.photos].concat({
-              key: 4,
-              cloudName: 'mycollections',
-              publicId: response.public_id,
-              width: 100,
-              height: 100 })
-          })
-          console.log('adding another picture one:', that.state.photos);
+
+          switch(imgType) {
+            case that.state.IMGTYPE.M_U:
+              that.setState({
+                photos: [...that.state.photos].concat({
+                  key: response._id,
+                  cloudName: 'mycollections',
+                  publicId: response.public_id,
+                  width: 100,
+                  height: 100 })
+              });
+              break;
+            case that.state.IMGTYPE.B_F:
+              that.setState({
+                model3d:{ front_face: response.public_id }
+              });
+              break;
+            default:
+              break;
+          }
         })
         .catch(err=>{
           console.log('ERROR>', err);
@@ -124,7 +127,7 @@ class AddImages extends Component {
   }
 
   componentDidMount() {
-    fetch(`${backend.getCollection}${this.props.match.params.id}`)
+    fetch(`${backend.getCollection}/${this.state.collectionId}`)
     .then(_=>{
       return _.json();
     })
@@ -138,12 +141,22 @@ class AddImages extends Component {
       console.log('ERROR>', err);
     });
 
-    fetch(`${backend.getPictures}`)
+    fetch(`${backend.getPictures}/${this.state.collectionId}`)
     .then(_=>{
       return _.json();
     })
     .then(data=>{
-      console.log('this are the retrieved images', data);
+      this.setState({photos:
+        data.map(img=>{
+          return {
+            key: img._id,
+            cloudName: 'mycollections',
+            publicId: img.public_id,
+            width: 100,
+            height: 100
+          }
+        })
+      })
     })
     .catch(err=>{
       console.log('ERROR>', err);
@@ -184,6 +197,8 @@ class AddImages extends Component {
   }
 
   render() {
+    const dropzoneRef = React.createRef();
+
     return (
       <div>
         <Header />
@@ -195,31 +210,63 @@ class AddImages extends Component {
             <Panel.Body>
               <Row>
                 <Col md={8}>
-                  Drag images here
+                  <h3>Drag images here</h3>
                   <Row>
-                    <Col mdOffset={4} md={2}  className="img-placeholder-top"> <Image cloudName="mycollections" publicId="barbies/empty" width="120" height="70" crop="scale" /> </Col>
+                    <Col mdOffset={4} md={2}  className="img-placeholder-top"> 
+                      <Image cloudName="mycollections" publicId={this.state.model3d.top_face} width="120" height="70" crop="scale" /> 
+                    </Col>
                   </Row>
                   <Row>
-                    <Col mdOffset={2} md={2} className="img-placeholder-left"> <Image cloudName="mycollections" publicId="barbies/b_left" width="120" height="280" crop="scale" /> </Col>
-                    <Col md={2} className="img-placeholder-front"> <Image cloudName="mycollections" publicId="barbies/b_front" width="150" height="280" crop="scale" /> </Col>
-                    <Col md={2} className="img-placeholder-right"> <Image cloudName="mycollections" publicId="barbies/b_right" width="120" height="280" crop="scale" /> </Col>
+                    <Col mdOffset={2} md={2} className="img-placeholder-left"> 
+                      <Image cloudName="mycollections" publicId={this.state.model3d.left_face} width="120" height="280" crop="scale" /> 
+                      <div className="edit">
+                        <Dropzone ref={dropzoneRef} onDrop={(accepted, rejected)=>this.onDrop(accepted, rejected, this.state.IMGTYPE.M_U)} style={{'display': 'none'}}>
+                            <p>Drop files here.</p>
+                        </Dropzone>
+                        <button type="button" onClick={() => { dropzoneRef.current.open() }}>
+                            <FaIcon icon="edit" size="3x" />
+                        </button>
+                      </div>
+                    </Col>
+                    <Col md={2} className="img-placeholder-front"> 
+                      <Image cloudName="mycollections" publicId={this.state.model3d.front_face} width="150" height="280" crop="scale" /> 
+                      <div className="edit">
+                        <Dropzone ref={dropzoneRef} onDrop={(accepted, rejected)=>this.onDrop(accepted, rejected, this.state.IMGTYPE.B_F)} style={{'display': 'none'}}>
+                            <p>Drop files here.</p>
+                        </Dropzone>
+                        <button type="button" onClick={() => { dropzoneRef.current.open() }}>
+                            <FaIcon icon="cloud-upload-alt" size="2x" />
+                        </button>
+                      </div>
+                    </Col>
+                    <Col md={2} className="img-placeholder-right"> 
+                      <Image cloudName="mycollections" publicId={this.state.model3d.right_face} width="120" height="280" crop="scale" /> 
+                    </Col>
                   </Row>
                   <Row>
-                    <Col mdOffset={4} md={2} className="img-placeholder-bottom"> <Image cloudName="mycollections" publicId="barbies/empty" width="120" height="70" crop="scale" /> </Col>
+                    <Col mdOffset={4} md={2} className="img-placeholder-bottom"> 
+                      <Image cloudName="mycollections" publicId={this.state.model3d.bottom_face} width="120" height="70" crop="scale" /> 
+                    </Col>
                   </Row>
                 </Col>
                 <Col md={4}>
-                  More Pictures
-                  <div id="caquita-here"></div>
+                  <h3>More Pictures</h3>
                   <Row>
                     { this.state.photos.map(img=>(
-                      <Col md={4} key={img.key} className="pt-3 main-image"> <Image cloudName={img.cloudName} publicId={img.publicId} width={img.width} height={img.height} crop="scale" /> </Col>
+                      <Col md={4} key={img.key} className="pt-3 main-image"> 
+                        <Image cloudName={img.cloudName} publicId={img.publicId} width={img.width} height={img.height} crop="scale" /> 
+                        <div className="edit-img">
+                          <button type="button" onClick={()=>this.deleteImg(img.publicId)}>
+                              <FaIcon icon="minus-circle" />
+                          </button>
+                        </div>
+                      </Col>
                     )) }
                     <Col md={4}>
-                      <Dropzone onDrop={this.onDrop.bind(this)} className="dropzone-main" id="dropzone-main">
+                      <Dropzone onDrop={(accepted, rejected)=>this.onDrop(accepted, rejected, this.state.IMGTYPE.M_U)} className="dropzone-main" id="dropzone-main">
                         <div className="dropzone-container">
-                          <FaIcon icon="cloud-upload-alt" size="3x" />
-                          <div>drop some files or click to select files</div>
+                          <FaIcon icon="cloud-upload-alt" size="2x" />
+                          <div>Drop images or click to select</div>
                         </div>
                       </Dropzone>
                     </Col>

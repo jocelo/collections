@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ImageModelSchema = mongoose.Schema({
+const ImageModel = mongoose.Schema({
   id: Number,
   collection_id: String,
   user_id: Number,
@@ -9,4 +9,4 @@ const ImageModelSchema = mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('ImageModelSchema', ImageModelSchema);
+module.exports = mongoose.model('Image', ImageModel);
