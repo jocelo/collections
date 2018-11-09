@@ -1,4 +1,5 @@
 const Image = require('../models/image.model');
+const mongoose = require('mongoose');
 
 exports.add = (req, res) => {
   if (!req.body) {
@@ -29,12 +30,31 @@ exports.add = (req, res) => {
   });
 }
 
-exports.update = (req, res)=> {
+exports.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: "Missing details for collection update"
     });
   }
+}
+
+exports.delete = (req, res) => {
+  console.log('about to delete this item');
+  if (!req.body) {
+    return res.status(400).send({
+      message: "ID sent for image deletion is not correct"
+    });
+  }
+
+  Image.findOneAndDelete(req.body.imageId, function(err, img){
+    if (err) return res.status(500).send(err);
+    
+    return res.status(200).send({
+      message: `Image ${req.body.imageId} delete succesfully` 
+    })
+  })
+
+  // console.log('ths was deleted!!!', req.body.imageId, img);
 }
 
 exports.getAll = (req, res) => {
@@ -50,12 +70,4 @@ exports.getAll = (req, res) => {
       message: err.message || "There was an error while retrieving all the images."
     });
   });
-}
-
-exports.findOne = (req, res) => {
-
-}
-
-exports.delete = (req, res) => {
-
 }

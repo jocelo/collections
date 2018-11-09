@@ -101,7 +101,7 @@ exports.delete = (req, res) => {
 				});
 			}
 			res.send({
-				message: 'Note delete successfully!'
+				message: 'Category delete successfully!'
 			});
 		})
 		.catch(err=>{

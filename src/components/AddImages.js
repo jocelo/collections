@@ -41,6 +41,13 @@ class AddImages extends Component {
 
     this.onDrop = this.onDrop.bind(this);
     this.deleteImg = this.deleteImg.bind(this);
+    this.show3d = this.show3d.bind(this);
+  }
+
+  show3d() {
+    const newDiv = document.createElement('div');
+    newDiv.classList = 'backdrop';
+    document.getElementById('root').appendChild(newDiv);
   }
 
   onDrop(accepted, rejected, imgType) {
@@ -48,7 +55,32 @@ class AddImages extends Component {
   }
 
   deleteImg(imgId) {
-    console.log('will delete', imgId);
+    if ( window.confirm('will delete image') ) {
+      fetch(`${backend.deletePicture}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          imageId: imgId
+        })
+      })
+      .then(_=>{
+        if (_.status === 200) {
+          document.getElementById(imgId).animate([
+            { opacity: 1, }, 
+            { opacity: 0, }
+          ], { duration: 750 });
+
+          setTimeout(()=>{
+            document.getElementById(imgId).remove();
+          },800);
+        }
+      })
+      .catch(err=>{
+        console.log('ERROR:', err)
+      });
+    }
   }
 
   uploadFile(file, imgType) {
@@ -127,6 +159,12 @@ class AddImages extends Component {
   }
 
   componentDidMount() {
+    document.addEventListener('click', (e)=>{
+      if( Array.from(e.target.classList).indexOf('backdrop') >= 0 ) {
+        e.target.remove();
+      }
+    });
+
     fetch(`${backend.getCollection}/${this.state.collectionId}`)
     .then(_=>{
       return _.json();
@@ -138,7 +176,7 @@ class AddImages extends Component {
       });
     })
     .catch(err=>{
-      console.log('ERROR>', err);
+      console.log('ERROR:', err);
     });
 
     fetch(`${backend.getPictures}/${this.state.collectionId}`)
@@ -159,7 +197,7 @@ class AddImages extends Component {
       })
     })
     .catch(err=>{
-      console.log('ERROR>', err);
+      console.log('ERROR:', err);
     });
 
 /*
@@ -253,8 +291,8 @@ class AddImages extends Component {
                   <h3>More Pictures</h3>
                   <Row>
                     { this.state.photos.map(img=>(
-                      <Col md={4} key={img.key} className="pt-3 main-image"> 
-                        <Image cloudName={img.cloudName} publicId={img.publicId} width={img.width} height={img.height} crop="scale" /> 
+                      <Col md={4} key={img.key} id={img.publicId} className="pt-3 main-image"> 
+                        <Image cloudName={img.cloudName} publicId={img.publicId} width={img.width} height={img.height} crop="scale" className="regular-image"/> 
                         <div className="edit-img">
                           <button type="button" onClick={()=>this.deleteImg(img.publicId)}>
                               <FaIcon icon="minus-circle" />
@@ -275,7 +313,7 @@ class AddImages extends Component {
               </Row>
             </Panel.Body>
             <Panel.Footer>
-              <button><FaIcon icon={["fab","codepen"]} size="2x" className="mr-3" />view 3D</button>
+              <button onClick={this.show3d}><FaIcon icon={["fab","codepen"]} size="2x" className="mr-3" />view 3D</button>
             </Panel.Footer>
           </Panel>
         </Grid>
