@@ -5,8 +5,10 @@ import { Grid, Panel, Row, Col } from 'react-bootstrap';
 import FaIcon from '@fortawesome/react-fontawesome';
 import { Image } from 'cloudinary-react';
 import Dropzone from 'react-dropzone';
+import ThreeEntryPoint from './threejs/ThreeEntryPoint';
 
 import '../css/images.scss';
+import * as THREE from 'three';
 
 function handleFiles(files) {
   for (var i = 0; i < files.length; i++) {
@@ -18,6 +20,7 @@ class AddImages extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      show3d: false,
       collectionId: props.match.params.id,
       originalTitle: '',
       dropZoneDisabled: false,
@@ -45,9 +48,11 @@ class AddImages extends Component {
   }
 
   show3d() {
-    const newDiv = document.createElement('div');
-    newDiv.classList = 'backdrop';
-    document.getElementById('root').appendChild(newDiv);
+    this.setState({show3d: true});
+  }
+
+  hide3d() {
+    this.setState({show3d: false});
   }
 
   onDrop(accepted, rejected, imgType) {
@@ -160,8 +165,8 @@ class AddImages extends Component {
 
   componentDidMount() {
     document.addEventListener('click', (e)=>{
-      if( Array.from(e.target.classList).indexOf('backdrop') >= 0 ) {
-        e.target.remove();
+      if( e.target.nodeName === 'CANVAS' || Array.from(e.target.classList).indexOf('backdrop') >= 0 ) {
+        this.hide3d();
       }
     });
 
@@ -200,14 +205,6 @@ class AddImages extends Component {
       console.log('ERROR:', err);
     });
 
-/*
-    document.getElementById("fileSelect").addEventListener("click", function(e) {
-      if (document.getElementById("fileElem")) {
-        document.getElementById("fileElem").click();
-      }
-      e.preventDefault();
-    }, false);
-*/
     function dragenter(e) {
       e.stopPropagation();
       e.preventDefault();
@@ -318,6 +315,11 @@ class AddImages extends Component {
           </Panel>
         </Grid>
         <br /><br /><br /><br />
+        { this.state.show3d ? 
+          <div className="backdrop">
+            <ThreeEntryPoint frontFace={this.state.model3d.front_face} leftFace={this.state.model3d.left_face} rightFace={this.state.model3d.right_face} />
+          </div>
+         : null }
       </div>
     )
   }
